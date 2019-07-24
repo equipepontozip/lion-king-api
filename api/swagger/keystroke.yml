@@ -1,0 +1,24 @@
+tags:
+  - "Analise de Digitação"
+definitions:
+  Text:
+    type: object
+    properties:
+      text:
+        type: string
+tags:
+  - Classificação 
+parameters:
+  - in: body
+    name: body
+    schema:
+      $ref: '#/definitions/Text'
+produces:
+  - application/json 
+responses:
+  200:
+    description: "Array com frequência de Texto"
+    schema:
+      type: object 
+  500:
+    description: "Erro interno do servidor"

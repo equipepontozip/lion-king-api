@@ -34,6 +34,7 @@ def status():
 
 
 @app.route('/keystroke', methods=['POST'])
+@swag_from('swagger/keystroke.yml')
 def keystroke():
     req_dict = request.get_json()
 
@@ -52,5 +53,19 @@ def face_recognition():
 
     image = decode_image(request.files['image'])
     classification = face_classifier(image)
+
+    return jsonify({'classification': classification})
+
+#classificação textual para remover depois
+
+@app.route('/classify', methods=['POST'])
+@swag_from('swagger/classify.yml')
+def route_classify():
+    req_dict = request.get_json()
+
+    try:
+        classification = classify(req_dict['text'])
+    except KeyError:
+        return jsonify({'Error': 'Corpo da requisição inválido'}), 400
 
     return jsonify({'classification': classification})

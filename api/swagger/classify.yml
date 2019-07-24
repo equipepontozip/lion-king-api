@@ -1,0 +1,23 @@
+definitions:
+  Text:
+    type: object
+    properties:
+      text:
+        type: string
+tags:
+  - Classificação 
+parameters:
+  - in: body
+    name: body
+    schema:
+      $ref: '#/definitions/Text'
+produces:
+  - application/json 
+responses:
+  200:
+    description: "Classificação do texto da notícia"
+    schema:
+      type: object 
+  500:
+    description: "Erro interno do servidor"
+
