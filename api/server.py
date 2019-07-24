@@ -11,6 +11,7 @@ from swagger.swagger_config import swagger_configuration
 from classifier import keystroke_classifier
 from classifier import face_classifier
 
+from classifier import classify 
 
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_configuration)
