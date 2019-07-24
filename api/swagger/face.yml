@@ -1,0 +1,33 @@
+tags:
+  - "Reconhecimento facial"
+consumes:
+  - multipart/form-data
+parameters:
+  - name: image 
+    description: Image do rosto do usuário
+    in: formData
+    required: true
+    type: file
+
+definitions:
+  Face:
+    type: object
+    properties:
+      classification:
+        type: string 
+
+responses:
+  200:
+    description: "Classificação do rosto do usuário"
+    schema:
+      $ref: '#/definitions/Face'
+  400:
+    description: "Erro no conteúdo da requisição"
+    schema:
+      type: object
+      properties:
+        Error:
+          type: string
+  500:
+    description: "Erro interno do servidor"
+
