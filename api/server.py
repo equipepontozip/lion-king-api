@@ -65,7 +65,7 @@ def route_classify():
     req_dict = request.get_json()
 
     try:
-        classification = classify(req_dict['text'])
+        classification = text_classify(req_dict['text'])
     except KeyError:
         return jsonify({'Error': 'Corpo da requisição inválido'}), 400
 
