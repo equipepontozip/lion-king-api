@@ -1,5 +1,6 @@
 import pickle
-import handlers.pickle_handler as model_handler
+
+#import handlers.pickle_handler as model_handler
 
 def keystroke_classifier(req_json):
     # TODO: Implementar
