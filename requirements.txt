@@ -4,3 +4,6 @@ scikit-learn
 #opencv-python
 opencv-python-headless
 gunicorn
+cmake
+dlib
+face_recognition

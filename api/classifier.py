@@ -1,19 +1,31 @@
 import pickle
 
+import face_recognition
+
 #import handlers.pickle_handler as model_handler
+import handlers.data_transform as data_transform
 
 def keystroke_classifier(req_json):
     # TODO: Implementar
     classifier = load_keystroke_model()
 
-    
+    keystroke_array = data_transform.array_for_predict(req_json)
+
+    pred = classifier.predict(keystroke_array)
+
     return 1
 
 
-def face_classifier(image):
+def face_classifier(req_decoded_image):
     # TODO: Implementar
     #classifier = load_facial_model()
-
+    pic = face_recognition.load_image_file(req_decoded_image)
+    encoding = face_recognition.face_encodings(pic)[0]
+    
+    results = face_recognition.compare_faces(clientes, encoding,tolerance=0.6)
+    
+    return max(results)
+    #pred = classifier.predict(decoded_image)
     return "foo"
 
 def text_classify(text):

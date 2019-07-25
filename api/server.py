@@ -59,8 +59,12 @@ def face_recognition():
         response.status_code = 400
         return response
 
-    image = decode_image(request.files['image'])
-    classification = face_classifier(image)
+    #precisa que manda a imagem e não decodificado
+    
+    decoded_image = decode_image(request.files['image'])
+    #o que é essa função decode_image???
+    
+    classification = face_classifier(decoded_image)
 
     return jsonify({'classification': classification})
 
