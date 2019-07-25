@@ -18,7 +18,7 @@ def keystroke_classifier(req_json):
     return 1
 
 def face_classifier(req_image):
-    pic = face_recognition.load_image_file('./api/photos/matheus.jpg')
+    pic = face_recognition.load_image_file('/app/api/photos/matheus.jpg')
     registered = face_recognition.face_encodings(pic)
     
     unknown = face_recognition.load_image_file(req_image)
