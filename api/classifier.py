@@ -12,13 +12,13 @@ def face_classifier(image):
     return "foo"
 
 def load_model():
-    model = pickle.load(open('api/bin-models/v1/rf-classifier', 'rb'))
+    model = pickle.load(open('/app/api/bin-models/v1/rf-classifier', 'rb'))
 
     return model
 
 
 def load_vectorizer():
-    vectorizer = pickle.load(open('api/bin-models/v1/tf-idf-vectorizer', 'rb'))
+    vectorizer = pickle.load(open('/app/api/bin-models/v1/tf-idf-vectorizer', 'rb'))
 
     return vectorizer
 
