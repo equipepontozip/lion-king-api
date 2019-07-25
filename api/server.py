@@ -13,6 +13,13 @@ from classifier import keystroke_classifier
 from classifier import face_classifier
 from classifier import text_classify 
 
+import os
+
+abs_path = os.path.dirname(os.path.realpath(__file__))
+abs_path = abs_path.replace("api", "job")
+
+sys.path.append(abs_path)
+
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_configuration)
 
