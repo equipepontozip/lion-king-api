@@ -18,7 +18,7 @@ def load_model():
 
 
 def load_vectorizer():
-    vectorizer = pickle.load(open('/app/api/bin-models/v1/tf-idf-vectorizer', 'rb'))
+    vectorizer = pickle.load(open('./bin-models/v1/tf-idf-vectorizer', 'rb'))
 
     return vectorizer
 
