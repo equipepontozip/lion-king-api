@@ -61,7 +61,8 @@ def face_recognition():
 
     #precisa que manda a imagem e não decodificado
     
-    decoded_image = decode_image(request.files['image'])
+    #decoded_image = decode_image(request.files['image'])
+    decoded_image = request.files['image']
     #o que é essa função decode_image???
     
     classification = face_classifier(decoded_image)
