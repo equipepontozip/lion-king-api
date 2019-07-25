@@ -13,13 +13,6 @@ from classifier import keystroke_classifier
 from classifier import face_classifier
 from classifier import text_classify 
 
-#import os
-#import sys
-#abs_path = os.path.dirname(os.path.realpath(__file__))
-#abs_path = abs_path.replace("api", "job")
-
-#sys.path.append(abs_path)
-
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_configuration)
 
@@ -59,11 +52,8 @@ def face_recognition():
         response.status_code = 400
         return response
 
-    #precisa que manda a imagem e não decodificado
-    
     #decoded_image = decode_image(request.files['image'])
     decoded_image = request.files['image']
-    #o que é essa função decode_image???
     
     classification = face_classifier(decoded_image)
 
