@@ -7,7 +7,6 @@ import handlers.data_transform as data_transform
 import sys
 
 def keystroke_classifier(df):
-    # TODO: Implementar
     classifier = load_keystroke_model()
 
     pred = classifier.predict(df)

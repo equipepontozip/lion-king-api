@@ -29,6 +29,10 @@ def transform_keystroke(data):
                'DD.n.l', 'UD.n.l', 'H.l', 'DD.l.return', 'UD.l.return', 'H.return'
     ]
 
-    df = df[colsnew]
+    try:
+	    df = df[colsnew]
+    except KeyError:
+	    return False
+
 
     return df

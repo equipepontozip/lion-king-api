@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import sys
 import cv2
 import json
@@ -52,7 +53,11 @@ def keystroke():
 
     data = transform_keystroke(req_dict)
 
+    if data == False:
+        return jsonify({'classification': data})
+
     classification = keystroke_classifier(data)
+    print("class:", classification, file=sys.stdout)
 
     return jsonify({'classification': classification[0]})
 
