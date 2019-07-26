@@ -1,17 +1,21 @@
 import numpy as np
+import pandas as pd
+import sys
 import cv2
+import json
 
-from flask import Flask
-from flask import jsonify
-from flask import request
+from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 
-from flasgger import Swagger
-from flasgger import swag_from
+from flasgger import Swagger, swag_from
+
+from flask_cors import CORS
+
 from swagger.swagger_config import swagger_configuration
 
 from classifier import keystroke_classifier
 from classifier import face_classifier
+from handlers.data_transform import transform_keystroke
 from classifier import anomaly_classifier
 
 import json
@@ -20,6 +24,7 @@ app = Flask(__name__)
 CORS(app, origins="*")
 app.config['CORS_HEADERS'] = 'Content-Type'
 swagger = Swagger(app, config=swagger_configuration)
+CORS(app, origins="*")
 
 
 def decode_image(file):
@@ -44,11 +49,17 @@ def status():
 @cross_origin()
 @swag_from('swagger/keystroke.yml')
 def keystroke():
-    req_dict = request.get_json()
+    req_dict = json.loads(request.data)
 
-    classification = keystroke_classifier(req_dict)
+    data = transform_keystroke(req_dict)
 
-    return jsonify({'classification': classification})
+    if data == False:
+        return jsonify({'classification': data})
+
+    classification = keystroke_classifier(data)
+    print("class:", classification, file=sys.stdout)
+
+    return jsonify({'classification': classification[0]})
 
 
 @app.route('/face', methods=['POST'])
