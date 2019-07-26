@@ -10,3 +10,9 @@ services:
       FLASK_DEBUG: 1
     volumes:
       - .:/api
+    networks:
+      - lion
+
+networks:
+  lion:
+    driver: bridge

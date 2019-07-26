@@ -1,17 +1,20 @@
 import numpy as np
+import sys
 import cv2
+import json
 
 from flask import Flask
 from flask import jsonify
 from flask import request
 from flasgger import Swagger
 from flasgger import swag_from
+from flask_cors import CORS
 
 from swagger.swagger_config import swagger_configuration
 
 from classifier import keystroke_classifier
 from classifier import face_classifier
-from classifier import text_classify 
+from handlers.data_transform import transform_keystroke
 
 #import os
 #import sys
@@ -22,6 +25,7 @@ from classifier import text_classify
 
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_configuration)
+CORS(app, origins="*")
 
 
 def decode_image(file):
@@ -44,11 +48,13 @@ def status():
 @app.route('/keystroke', methods=['POST'])
 @swag_from('swagger/keystroke.yml')
 def keystroke():
-    req_dict = request.get_json()
+    req_dict = json.loads(request.data)
 
-    classification = keystroke_classifier(req_dict)
+    data = transform_keystroke(req_dict)
 
-    return jsonify({'classification': classification})
+    classification = keystroke_classifier(data)
+
+    return jsonify({'classification': classification[0]})
 
 
 @app.route('/face', methods=['POST'])
@@ -60,24 +66,9 @@ def face_recognition():
         return response
 
     #precisa que manda a imagem e não decodificado
-    
     decoded_image = decode_image(request.files['image'])
+
     #o que é essa função decode_image???
-    
     classification = face_classifier(decoded_image)
-
-    return jsonify({'classification': classification})
-
-#classificação textual para remover depois
-
-@app.route('/classify', methods=['POST'])
-@swag_from('swagger/classify.yml')
-def route_classify():
-    req_dict = request.get_json()
-
-    try:
-        classification = text_classify(req_dict['text'])
-    except KeyError:
-        return jsonify({'Error': 'Corpo da requisição inválido'}), 400
 
     return jsonify({'classification': classification})
