@@ -76,7 +76,13 @@ def route_classify():
     return jsonify({'classification': classification})
 
 @app.route('/anomaly', methods=['POST'])
+@swag_from('swagger/anomaly.yml')
 def anomaly_classify():
+
+    # for testing temporary purpose, test json sent:
+    # {"cpf":"21079979177","ip":"192.168.5.21"} - anomaly
+    # {"cpf":"34894024407","ip":"192.31.221.248"} - normal
+
     ip = request.get_json()['ip']
     cpf = request.get_json()['cpf']
     classification = anomaly_classifier(ip,cpf)

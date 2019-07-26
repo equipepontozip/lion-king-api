@@ -15,7 +15,7 @@ produces:
   - application/json 
 responses:
   200:
-    description: "Classificação do texto da notícia"
+    description: "classificação se o registro é normal ou suspeito"
     schema:
       type: object 
   500:
