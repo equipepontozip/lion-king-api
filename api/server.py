@@ -21,7 +21,6 @@ from classifier import anomaly_classifier
 import json
 
 app = Flask(__name__)
-CORS(app, origins="*")
 app.config['CORS_HEADERS'] = 'Content-Type'
 swagger = Swagger(app, config=swagger_configuration)
 CORS(app, origins="*")
