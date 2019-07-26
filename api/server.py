@@ -61,20 +61,6 @@ def face_recognition():
 
     return jsonify({'classification': classification})
 
-#classificação textual para remover depois
-
-@app.route('/classify', methods=['POST'])
-@swag_from('swagger/classify.yml')
-def route_classify():
-    req_dict = request.get_json()
-
-    try:
-        classification = text_classify(req_dict['text'])
-    except KeyError:
-        return jsonify({'Error': 'Corpo da requisição inválido'}), 400
-
-    return jsonify({'classification': classification})
-
 @app.route('/anomaly', methods=['POST'])
 @swag_from('swagger/anomaly.yml')
 def anomaly_classify():
