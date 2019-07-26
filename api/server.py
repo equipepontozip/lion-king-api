@@ -11,7 +11,9 @@ from swagger.swagger_config import swagger_configuration
 
 from classifier import keystroke_classifier
 from classifier import face_classifier
-from classifier import text_classify 
+from classifier import anomaly_classifier
+
+import json
 
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_configuration)
@@ -72,3 +74,11 @@ def route_classify():
         return jsonify({'Error': 'Corpo da requisição inválido'}), 400
 
     return jsonify({'classification': classification})
+
+@app.route('/anomaly', methods=['POST'])
+def anomaly_classify():
+    ip = request.get_json()['ip']
+    cpf = request.get_json()['cpf']
+    classification = anomaly_classifier(ip,cpf)
+    
+    return classification
