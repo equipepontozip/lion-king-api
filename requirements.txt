@@ -7,3 +7,4 @@ gunicorn
 cmake
 dlib
 face_recognition
+flask-cors

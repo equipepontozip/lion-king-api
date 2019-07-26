@@ -4,9 +4,10 @@ import cv2
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask_cors import CORS, cross_origin
+
 from flasgger import Swagger
 from flasgger import swag_from
-
 from swagger.swagger_config import swagger_configuration
 
 from classifier import keystroke_classifier
@@ -16,6 +17,8 @@ from classifier import anomaly_classifier
 import json
 
 app = Flask(__name__)
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 swagger = Swagger(app, config=swagger_configuration)
 
 
@@ -31,12 +34,14 @@ def decode_image(file):
 
 @app.route('/', methods=['GET'])
 @app.route('/status', methods=['GET'])
+@cross_origin
 @swag_from('swagger/status.yml')
 def status():
     return jsonify({'status': 'ok'})
 
 
 @app.route('/keystroke', methods=['POST'])
+@cross_origin
 @swag_from('swagger/keystroke.yml')
 def keystroke():
     req_dict = request.get_json()
@@ -47,6 +52,7 @@ def keystroke():
 
 
 @app.route('/face', methods=['POST'])
+@cross_origin
 @swag_from('swagger/face.yml')
 def face_recognition():
     if not 'image' in request.files:
