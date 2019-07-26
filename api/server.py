@@ -61,22 +61,14 @@ def face_recognition():
 
     return jsonify({'classification': classification})
 
-#classificação textual para remover depois
-
-@app.route('/classify', methods=['POST'])
-@swag_from('swagger/classify.yml')
-def route_classify():
-    req_dict = request.get_json()
-
-    try:
-        classification = text_classify(req_dict['text'])
-    except KeyError:
-        return jsonify({'Error': 'Corpo da requisição inválido'}), 400
-
-    return jsonify({'classification': classification})
-
 @app.route('/anomaly', methods=['POST'])
+@swag_from('swagger/anomaly.yml')
 def anomaly_classify():
+
+    # for testing temporary purpose, test json sent:
+    # {"cpf":"21079979177","ip":"192.168.5.21"} - anomaly
+    # {"cpf":"34894024407","ip":"192.31.221.248"} - normal
+
     ip = request.get_json()['ip']
     cpf = request.get_json()['cpf']
     classification = anomaly_classifier(ip,cpf)
