@@ -4,23 +4,21 @@ import numpy as np
 import os
 from sklearn.feature_extraction import FeatureHasher
 
+#import handlers.pickle_handler as model_handler
+import handlers.data_transform as data_transform
+import sys
+
 # navega para a pasta deste script
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-def keystroke_classifier(req_json):
-    # TODO: Implementar
+def keystroke_classifier(df):
     classifier = load_keystroke_model()
 
-    pred = classifier.predict(keystroke_array)
+    pred = classifier.predict(df)
 
-    if pred[0] == 0:
-        flag = 'False'
-    elif pred[0] == 1:
-        flag = 'True'
-
-    return flag
+    return pred
 
 def face_classifier(req_image):
     pic = face_recognition.load_image_file('/app/api/photos/matheus.jpg')
@@ -38,7 +36,7 @@ def face_classifier(req_image):
 
 # Keystroke
 def load_keystroke_model():
-    model = pickle.load(open('./bin_models/v1/model_keystroke.pickle', 'rb'))
+    model = pickle.load(open('/api/api/bin_models/v1/voting.pickle', 'rb'))
 
     return 
     
