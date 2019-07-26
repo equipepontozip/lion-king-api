@@ -16,13 +16,9 @@ from swagger.swagger_config import swagger_configuration
 from classifier import keystroke_classifier
 from classifier import face_classifier
 from handlers.data_transform import transform_keystroke
+from classifier import anomaly_classifier
 
-#import os
-#import sys
-#abs_path = os.path.dirname(os.path.realpath(__file__))
-#abs_path = abs_path.replace("api", "job")
-
-#sys.path.append(abs_path)
+import json
 
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_configuration)
@@ -70,10 +66,23 @@ def face_recognition():
         response.status_code = 400
         return response
 
-    #precisa que manda a imagem e não decodificado
-    decoded_image = decode_image(request.files['image'])
-
-    #o que é essa função decode_image???
+    #decoded_image = decode_image(request.files['image'])
+    decoded_image = request.files['image']
+    
     classification = face_classifier(decoded_image)
 
     return jsonify({'classification': classification})
+
+@app.route('/anomaly', methods=['POST'])
+@swag_from('swagger/anomaly.yml')
+def anomaly_classify():
+
+    # for testing temporary purpose, test json sent:
+    # {"cpf":"21079979177","ip":"192.168.5.21"} - anomaly
+    # {"cpf":"34894024407","ip":"192.31.221.248"} - normal
+
+    ip = request.get_json()['ip']
+    cpf = request.get_json()['cpf']
+    classification = anomaly_classifier(ip,cpf)
+    
+    return classification
